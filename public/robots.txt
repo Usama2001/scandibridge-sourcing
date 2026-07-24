@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://usama2001.github.io/scandibridge-sourcing/sitemap.xml
