@@ -10,7 +10,7 @@ A modern, responsive, Swedish-first B2B sourcing website for ScandiBridge Sourci
 - React Router
 - Lucide React icons
 - Local Swedish and English translations
-- GitHub Actions deployment to GitHub Pages
+- Static `gh-pages` branch deployment to GitHub Pages
 
 ## Local setup
 
@@ -31,7 +31,7 @@ pnpm run build:pages
 pnpm run test
 ```
 
-`pnpm run build` creates the Sites production package. `pnpm run build:pages` creates the static GitHub Pages output in `dist-pages/`.
+`pnpm run build` creates the Sites production package. `pnpm run build:pages` creates the static GitHub Pages output in `dist-pages/`, including direct entry files for every sitemap route.
 
 ## Main routes
 
@@ -121,13 +121,13 @@ The static Vite config uses:
 base: "/scandibridge-sourcing/"
 ```
 
-`.github/workflows/deploy-pages.yml` builds and deploys the site after every push to `main`.
+GitHub Pages serves the compiled `dist-pages/` output from the `gh-pages` branch. The static build creates an `index.html` entry for every public route so direct links return a successful page response instead of relying on a 404 fallback.
 
-After pushing the repository:
+To publish an update:
 
-1. Open repository **Settings → Pages**.
-2. Set **Source** to **GitHub Actions** if it is not already selected.
-3. Open the latest **Deploy GitHub Pages** workflow run and confirm it succeeds.
+1. Run `pnpm run build:pages`.
+2. Publish the contents of `dist-pages/` to the root of the `gh-pages` branch.
+3. Keep **Settings → Pages → Source** set to **Deploy from a branch**, using `gh-pages` and `/ (root)`.
 
 ## Custom domain
 

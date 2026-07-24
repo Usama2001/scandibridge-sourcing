@@ -40,15 +40,15 @@ test("contact form validates, creates mailto and includes requested fields", asy
 });
 
 test("ships GitHub Pages, SEO and static assets", async () => {
-  const [vite, workflow, index, robots, sitemap] = await Promise.all([
+  const [vite, staticRoutes, index, robots, sitemap] = await Promise.all([
     read("vite.static.config.ts"),
-    read(".github/workflows/deploy-pages.yml"),
+    read("scripts/generate-static-routes.mjs"),
     read("index.html"),
     read("public/robots.txt"),
     read("public/sitemap.xml"),
   ]);
   assert.match(vite, /base: "\/scandibridge-sourcing\/"/);
-  assert.match(workflow, /actions\/deploy-pages@v4/);
+  assert.match(staticRoutes, /products\/towels\/gym-spa/);
   assert.match(index, /application\/ld\+json/);
   assert.match(index, /og:title/);
   assert.match(robots, /Sitemap:/);
@@ -56,4 +56,6 @@ test("ships GitHub Pages, SEO and static assets", async () => {
   await access(new URL("public/scandibridge-logo.png", root));
   await access(new URL("public/hero-logistics.jpg", root));
   await access(new URL("dist-pages/index.html", root));
+  await access(new URL("dist-pages/about/index.html", root));
+  await access(new URL("dist-pages/products/towels/gym-spa/index.html", root));
 });
